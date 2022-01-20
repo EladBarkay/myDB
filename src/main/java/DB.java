@@ -17,9 +17,13 @@ public class DB {
 
     public void load(String path) throws IOException {
         HashMap<String, Table> tables = new HashMap<>();
-        Class<?> tableKeyType;
+        Class<?> tableKeyType = Object.class;
+        ArrayList<ColumnData> columns = new ArrayList<>();
+
+
         ZipInputStream zis = new ZipInputStream(new FileInputStream(path));
         ZipEntry currentEntry = zis.getNextEntry();
+
 
         while (currentEntry != null) {
             //[0] = tableName, [1] = columnName
@@ -40,10 +44,9 @@ public class DB {
             else{
                 if (!table_column[1].contains(".md")){
                     String columnString = getEntryString(zis);
-                    ColumnData column = new ColumnData(table_column[1], columnString);
-                    System.out.println(table_column[1] + ": ");
-                    System.out.println(columnString);
-                    System.out.println("");
+                    ColumnData column = new ColumnData(table_column[1], tableKeyType, columnString);
+                    columns.add(column);
+                    //TODO: FIX this one -:- tables.get("1").
                 }
             }
             currentEntry = zis.getNextEntry();
