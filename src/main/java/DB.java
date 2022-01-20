@@ -46,7 +46,7 @@ public class DB {
                     String columnString = getEntryString(zis);
                     ColumnData column = new ColumnData(table_column[1], tableKeyType, columnString);
                     columns.add(column);
-                    //TODO: FIX this one -:- tables.get("1").
+                    //TODO: FIX this one - tables.get("1").
                 }
             }
             currentEntry = zis.getNextEntry();
