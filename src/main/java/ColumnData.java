@@ -38,7 +38,20 @@ public class  ColumnData {
      * 15:90
      */
     public ColumnData(String name, Class<?> keyType, String columnString){
+        this.columnName = name;
+        String[] values = columnString.split("\n");
+        try {
+            this.type = Class.forName(values[0]);
+        } catch (ClassNotFoundException e) {
+            this.type = Object.class;
+            System.out.println(e.getMessage());
+        }
 
+        for (int i = 1; i < values.length; i++) {
+            Object key = keyType.cast(values[i].split(":")[0]);
+            Object value = type.cast(values[i].split(":")[1]);
+            this.data.put(key, value);
+        }
     }
 
     public void put(Object key, Object value){
